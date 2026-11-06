@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# gs3: Gentle Shell (gs2, isolated install) + gs3-hud telemetry sidecar in herdr.
+#
+# Inside herdr : splits the current pane (gs2 left ~75%, sidecar right ~25%),
+#                keeps focus on gs2, closes the sidecar when gs2 exits.
+# Outside herdr: creates a herdr workspace for $PWD, runs gs3 inside it, attaches.
+#
+# Overrides (mainly for testing):
+#   GS3_SHELL  command for the big pane   (default: gentle-shell2 if installed, else pi)
+#   GS3_HUD    path to the gs3-hud binary (default: <repo>/target/release/gs3-hud)
+#   GS3_RATIO  split ratio for the big pane (default: 0.75)
+#   GS3_CONFIG sidecar settings file, the only file it writes (default: ~/.config/gs3/gs3-hud.json)
+#   GS3_NO_ATTACH=1  outside herdr: create the workspace but do not attach
+set -u
+
+SELF="$(readlink -f "${BASH_SOURCE[0]}")"
+REPO="$(cd "$(dirname "$SELF")/../.." && pwd)"
+SHELL_CMD="${GS3_SHELL:-$(command -v gentle-shell2 || command -v pi || true)}"
+RATIO="${GS3_RATIO:-0.75}"
+CONFIG="${GS3_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/gs3/gs3-hud.json}"
+HERDR="$(command -v herdr || true)"
+
+die() { printf 'gs3: %s\n' "$*" >&2; exit 1; }
+
+case "${1:-}" in
+  -h|--help)
+    sed -n '2,14p' "$SELF" | sed 's/^# \{0,1\}//'
+    exit 0 ;;
+esac
+
+[ -n "$HERDR" ] || die "herdr not found in PATH"
+[ -n "$SHELL_CMD" ] || die "no shell to run: install pi or set GS3_SHELL"
+
+find_hud() {
+  local c
+  for c in "${GS3_HUD:-}" "$REPO/target/release/gs3-hud" "$(command -v gs3-hud 2>/dev/null)"; do
+    [ -n "$c" ] && [ -x "$c" ] && { printf '%s' "$c"; return 0; }
+  done
+  return 1
+}
+
+quote_args() { local out="" a; for a in "$@"; do out+=" $(printf '%q' "$a")"; done; printf '%s' "$out"; }
+
+inside_herdr() {
+  local me="${HERDR_PANE_ID:?}" hud
+  HUD_PANE=""   # global: the EXIT trap runs after this function returns
+  if hud="$(find_hud)"; then
+    HUD_PANE="$("$HERDR" pane split "$me" --direction right --ratio "$RATIO" \
+      --cwd "$PWD" --no-focus | jq -r '.result.pane.pane_id // empty')"
+    if [ -n "$HUD_PANE" ]; then
+      # The HUD never creates directories: pass --config only when its folder exists.
+      local cfg=""; [ -d "$(dirname "$CONFIG")" ] && cfg=" --config $(printf '%q' "$CONFIG")"
+      "$HERDR" pane run "$HUD_PANE" \
+        "exec $(printf '%q' "$hud") --pane $(printf '%q' "$me") --cwd $(printf '%q' "$PWD")$cfg" >/dev/null \
+        || printf 'gs3: could not start sidecar in %s\n' "$HUD_PANE" >&2
+      # Close the sidecar whenever gs2 ends (normal exit, Ctrl-C, terminal hangup).
+      trap '"$HERDR" pane close "$HUD_PANE" >/dev/null 2>&1' EXIT
+      trap 'exit 130' INT
+      trap 'exit 143' TERM HUP
+    else
+      printf 'gs3: pane split failed; running gs2 without sidecar\n' >&2
+    fi
+  else
+    printf 'gs3: gs3-hud not built (cargo build --release in %s/gs3/hud); running gs2 alone\n' "$REPO" >&2
+  fi
+  "$SHELL_CMD" "$@"
+}
+
+outside_herdr() {
+  command -v jq >/dev/null || die "jq not found in PATH"
+  if ! "$HERDR" status server >/dev/null 2>&1; then
+    (setsid "$HERDR" server >/dev/null 2>&1 &)
+    local i
+    for i in $(seq 50); do "$HERDR" status server >/dev/null 2>&1 && break; sleep 0.1; done
+    "$HERDR" status server >/dev/null 2>&1 || die "herdr server did not start"
+  fi
+  local label ws root
+  label="$(basename "$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || printf '%s' "$PWD")")"
+  local focus=--focus
+  [ "${GS3_NO_ATTACH:-0}" = 1 ] && focus=--no-focus
+  ws="$("$HERDR" workspace create --cwd "$PWD" --label "gs3 · $label" "$focus")" || die "workspace create failed"
+  root="$(printf '%s' "$ws" | jq -r '.result.root_pane.pane_id // empty')"
+  [ -n "$root" ] || die "workspace create returned no root pane"
+  local env_prefix=""
+  [ -n "${GS3_SHELL:-}" ] && env_prefix+="GS3_SHELL=$(printf '%q' "$GS3_SHELL") "
+  [ -n "${GS3_HUD:-}" ] && env_prefix+="GS3_HUD=$(printf '%q' "$GS3_HUD") "
+  [ -n "${GS3_RATIO:-}" ] && env_prefix+="GS3_RATIO=$(printf '%q' "$GS3_RATIO") "
+  [ -n "${GS3_CONFIG:-}" ] && env_prefix+="GS3_CONFIG=$(printf '%q' "$GS3_CONFIG") "
+  # No exec: when gs2 exits the user stays in that pane's shell.
+  "$HERDR" pane run "$root" "${env_prefix}$(printf '%q' "$SELF")$(quote_args "$@")" >/dev/null \
+    || die "could not start gs3 in $root"
+  [ "${GS3_NO_ATTACH:-0}" = 1 ] && { printf '%s\n' "$ws"; exit 0; }
+  exec "$HERDR"
+}
+
+if [ "${HERDR_ENV:-}" = 1 ] && [ -n "${HERDR_PANE_ID:-}" ]; then
+  inside_herdr "$@"
+else
+  outside_herdr "$@"
+fi

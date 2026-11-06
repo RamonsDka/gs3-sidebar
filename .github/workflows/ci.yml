@@ -1,0 +1,21 @@
+name: CI
+on:
+  push: {branches: [main, master]}
+  pull_request:
+
+jobs:
+  hud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Tests
+        run: cargo test --release --locked --manifest-path gs3/hud/Cargo.toml
+  scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sintaxis de bash
+        run: bash -n install.sh uninstall.sh scripts/*.sh gs3/bin/gs3 skills/gs3-sidebar/scripts/doctor.sh
+      - name: Instalador en seco
+        run: ./install.sh --dry-run --yes --no-extensions --binary /bin/true || true

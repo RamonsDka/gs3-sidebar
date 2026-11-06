@@ -1,0 +1,13 @@
+name: Idea o mejora
+description: Una tarjeta, pestaña, extensión o plataforma nueva
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes: {label: Qué necesitás}
+    validations: {required: true}
+  - type: textarea
+    id: idea
+    attributes: {label: Cómo lo imaginás}
+  - type: markdown
+    attributes: {value: "Recordá que la barra es de solo lectura; ver CONTRIBUTING.md."}

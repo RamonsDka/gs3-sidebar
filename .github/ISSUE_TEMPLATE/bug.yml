@@ -1,0 +1,24 @@
+name: Error
+description: Algo no funciona como debería
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes: {label: Qué pasó, description: "Qué esperabas y qué pasó."}
+    validations: {required: true}
+  - type: textarea
+    id: steps
+    attributes: {label: Pasos para reproducir}
+    validations: {required: true}
+  - type: input
+    id: system
+    attributes: {label: Sistema, placeholder: "Pop!_OS 24.04 + COSMIC / WSL2 / ..."}
+    validations: {required: true}
+  - type: input
+    id: versions
+    attributes: {label: Versiones, placeholder: "herdr 0.9.5, pi 1.5.0, gs3-hud 0.1.0"}
+  - type: textarea
+    id: doctor
+    attributes: {label: Salida de scripts/doctor.sh, render: shell}
+  - type: markdown
+    attributes: {value: "Antes de pegar capturas o logs, quitá usuarios, rutas personales y tokens."}
