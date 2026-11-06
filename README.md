@@ -1,8 +1,32 @@
-# gs3-sidebar
+<div align="center">
 
-**Una barra lateral de solo lectura que muestra, en vivo, qué está haciendo tu agente Pi / Gentle Shell**: modelo, contexto y tokens, git, subagentes, memoria, árbol del proyecto. Vive en un panel de [herdr](https://herdr.dev) al lado de tu terminal y se abre con un solo comando: `gs3`.
+<img src="docs/assets/banner.svg" alt="gs3-sidebar" width="100%">
 
-![gs3 junto a Gentle Shell dentro de herdr](docs/assets/integration.png)
+<br>
+
+**Una barra lateral de solo lectura que muestra, en vivo, qué hace tu agente Pi / Gentle Shell**
+<br>modelo · contexto y tokens · git · subagentes · memoria · árbol del proyecto
+
+<br>
+
+<a href="https://github.com/RamonsDka/gs3-sidebar/blob/main/CHANGELOG.md"><img alt="VERSION 0.1.0" src="https://img.shields.io/badge/VERSION-0.1.0-ff8fc3?style=for-the-badge&labelColor=1a1020"></a> <a href="https://github.com/RamonsDka/gs3-sidebar/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/RamonsDka/gs3-sidebar?style=for-the-badge&labelColor=1a1020&color=ff8fc3&label=STARS"></a> <a href="https://github.com/RamonsDka/gs3-sidebar/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/RamonsDka/gs3-sidebar/ci.yml?branch=main&style=for-the-badge&labelColor=1a1020&color=7ee0a0&label=CI"></a> <a href="https://github.com/RamonsDka/gs3-sidebar/commits/main"><img alt="Último commit" src="https://img.shields.io/github/last-commit/RamonsDka/gs3-sidebar?style=for-the-badge&labelColor=1a1020&color=c77dff&label=COMMIT"></a> <a href="https://github.com/RamonsDka/gs3-sidebar/blob/main/LICENSE"><img alt="LICENCIA MIT" src="https://img.shields.io/badge/LICENCIA-MIT-d8a7d8?style=for-the-badge&labelColor=1a1020"></a>
+<br>
+<a href="https://www.rust-lang.org"><img alt="RUST 2021" src="https://img.shields.io/badge/RUST-2021-b7410e?style=for-the-badge&labelColor=1a1020&logo=rust&logoColor=white"></a> <a href="docs/install.md"><img alt="PLATAFORMA LINUX · PROBADO" src="https://img.shields.io/badge/PLATAFORMA-LINUX_%C2%B7_PROBADO-8e44ad?style=for-the-badge&labelColor=1a1020&logo=linux&logoColor=white"></a> <a href="docs/windows.md"><img alt="WINDOWS · OPENCODE SIN PROBAR" src="https://img.shields.io/badge/WINDOWS_%C2%B7_OPENCODE-SIN_PROBAR-6b5b7e?style=for-the-badge&labelColor=1a1020"></a> <a href="SECURITY.md"><img alt="SOLO LECTURA" src="https://img.shields.io/badge/SOLO-LECTURA-5fa777?style=for-the-badge&labelColor=1a1020"></a>
+<br>
+<a href="https://discord.gg/su7STZZpm"><img alt="DISCORD DIF™" src="https://img.shields.io/badge/DISCORD-DIF%E2%84%A2-5865F2?style=for-the-badge&labelColor=1a1020&logo=discord&logoColor=white"></a> <a href="https://discord.gg/JgfTGsaCG"><img alt="DISCORD GENTLEMAN PROGRAMMING" src="https://img.shields.io/badge/DISCORD-GENTLEMAN_PROGRAMMING-5865F2?style=for-the-badge&labelColor=1a1020&logo=discord&logoColor=white"></a> <a href="https://www.youtube.com/@RamonsDk-Dev"><img alt="YOUTUBE @RAMONSDK--DEV" src="https://img.shields.io/badge/YOUTUBE-%40RAMONSDK--DEV-FF0000?style=for-the-badge&labelColor=1a1020&logo=youtube&logoColor=white"></a> <a href="https://www.facebook.com/RamonsDk.Dev/"><img alt="FACEBOOK RAMONSDK.DEV" src="https://img.shields.io/badge/FACEBOOK-RAMONSDK.DEV-1877F2?style=for-the-badge&labelColor=1a1020&logo=facebook&logoColor=white"></a> <a href="https://rdktech.us/"><img alt="WEB RDKTECH.US" src="https://img.shields.io/badge/WEB-RDKTECH.US-8e44ad?style=for-the-badge&labelColor=1a1020&logo=googlechrome&logoColor=white"></a>
+
+<br><br>
+
+[**Instalar**](docs/install.md) &nbsp;•&nbsp; [**Pestañas**](docs/tabs.md) &nbsp;•&nbsp; [**Configuración**](docs/configuration.md) &nbsp;•&nbsp; [**Extensiones**](docs/extensions.md) &nbsp;•&nbsp; [**Windows**](docs/windows.md) &nbsp;•&nbsp; [**OpenCode**](docs/opencode.md) &nbsp;•&nbsp; [**Prompts**](prompts/)
+
+</div>
+
+---
+
+<div align="center">
+<img src="docs/assets/integration.png" alt="gs3 junto a Gentle Shell dentro de herdr" width="92%">
+<br><sub>La barra a la derecha, junto a Gentle Shell, dentro de herdr. Con difuminado donde había datos privados.</sub>
+</div>
 
 > [!IMPORTANT]
 > **Dónde se hizo y qué está probado**

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="340" viewBox="0 0 1280 340" role="img" aria-label="gs3-sidebar: barra lateral de telemetría para tu agente">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#140c1f"/>
+      <stop offset="1" stop-color="#0b0710"/>
+    </linearGradient>
+    <linearGradient id="name" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c77dff"/>
+      <stop offset="1" stop-color="#ff5fa2"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#8e44ad" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#8e44ad" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+
+  <rect width="1280" height="340" rx="18" fill="url(#bg)"/>
+  <rect x="1" y="1" width="1278" height="338" rx="17" fill="none" stroke="#8e44ad" stroke-opacity="0.55" stroke-width="2"/>
+  <ellipse cx="640" cy="150" rx="420" ry="150" fill="url(#glow)"/>
+
+  <!-- mini barra lateral (decorativa) -->
+  <g transform="translate(1040 38)" font-family="'JetBrains Mono','DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="13">
+    <rect width="200" height="264" rx="8" fill="#0d0813" stroke="#8e44ad" stroke-width="2"/>
+    <rect x="5" y="5" width="190" height="254" rx="5" fill="none" stroke="#8e44ad" stroke-opacity="0.6"/>
+    <text x="100" y="30" text-anchor="middle" fill="#ff8fc3" font-weight="bold">⌁ gs3 ⌁</text>
+    <text x="18" y="58" fill="#9b8ab0">MAIN</text>
+    <text x="68" y="58" fill="#ff8fc3" font-weight="bold">[GIT]</text>
+    <text x="118" y="58" fill="#9b8ab0">PROF</text>
+    <text x="160" y="58" fill="#9b8ab0">MEM</text>
+    <line x1="14" y1="70" x2="186" y2="70" stroke="#8e44ad" stroke-opacity="0.7"/>
+    <text x="18" y="96" fill="#f5c26b">⎇ feat/sidebar</text>
+    <text x="18" y="122" fill="#7ee0a0">▰▰▰▰▱▱▱▱ 38 %</text>
+    <text x="18" y="148" fill="#c9b8dc">▲ in  ▼ out</text>
+    <text x="18" y="174" fill="#ff8fc3">✓ ◉ ○  todos</text>
+    <text x="18" y="200" fill="#9b8ab0">● Engram online</text>
+    <text x="18" y="226" fill="#7ee0a0">● herdr  ● pi</text>
+    <text x="18" y="248" fill="#6f5f86" font-size="11">solo lectura</text>
+  </g>
+
+  <!-- logo -->
+  <g font-family="'JetBrains Mono','DejaVu Sans Mono',Menlo,Consolas,monospace">
+    <text x="80" y="170" font-size="124" font-weight="bold" fill="#f4eefb">&gt;_</text>
+    <text x="300" y="170" font-size="124" font-weight="bold" font-style="italic" fill="url(#name)">gs3</text>
+    <text x="84" y="236" font-size="34" font-weight="bold" fill="#f4eefb" letter-spacing="2">GS3-SIDEBAR</text>
+    <text x="84" y="278" font-size="21" fill="#b9a7cf">Barra lateral de telemetría, de solo lectura, para tu agente</text>
+    <text x="84" y="308" font-size="16" fill="#7d6b94">Pi · Gentle Shell  ×  herdr  ×  Rust</text>
+  </g>
+</svg>
